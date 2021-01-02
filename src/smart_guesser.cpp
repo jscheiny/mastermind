@@ -1,20 +1,16 @@
 #include "console.hpp"
 #include "match_table.hpp"
+#include "random.hpp"
 #include "scoped_timer.hpp"
 #include "smart_guesser.hpp"
 #include <algorithm>
 #include <functional>
 #include <future>
-#include <random>
 #include <sstream>
-
-std::random_device random_device;
-std::mt19937 random_generator(random_device());
 
 auto smart_guesser::make_guess() const -> int {
     if (guess_history_.empty()) {
-        std::uniform_int_distribution<> distribution(0, match_table::MAX_GUESS);
-        return distribution(random_generator);
+        return random_int(0, match_table::MAX_GUESS - 1);
     }
 
     if (possible_secrets_.size() == 1) {
@@ -71,8 +67,7 @@ auto smart_guesser::find_best_guess(int threads, int offset) const -> best_guess
         }
     }
 
-    std::uniform_int_distribution<> distribution(0, min_guesses.size() - 1);
-    int random_index = distribution(random_generator);
+    int random_index = random_int(0, min_guesses.size() - 1);
     return {.guess = min_guesses[random_index], .metric = min_metric};
 }
 
