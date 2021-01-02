@@ -1,7 +1,7 @@
 #include "console.hpp"
-#include "fixed_secret.hpp"
 #include "game.hpp"
 #include "match_table.hpp"
+#include "random_secret.hpp"
 #include "scoped_timer.hpp"
 #include "smart_guesser.hpp"
 #include <chrono>
@@ -16,7 +16,7 @@ auto main(int argc, char* argv[]) -> int {
     match_table::instance();
     std::cout << std::endl;
     auto guesser = std::make_shared<smart_guesser>();
-    auto secret = std::make_shared<fixed_secret>(1234);
+    auto secret = std::make_shared<random_secret>();
     game mastermind{guesser, secret};
 
     std::vector<int> move_counts;
