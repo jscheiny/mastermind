@@ -15,7 +15,7 @@ public:
     
 protected:
     std::vector<int> guess_history_;
-    std::vector<int> possible_secrets_;
+    std::vector<int> search_space_;
 
 };
 

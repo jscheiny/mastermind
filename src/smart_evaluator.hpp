@@ -4,7 +4,7 @@
 #include <vector>
 
 struct smart_evaluator {
-    auto operator()(int guess, const std::vector<int>& possible_secrets) const -> int;
+    auto operator()(int guess, const std::vector<int>& search_space) const -> int;
 };
 
 #endif

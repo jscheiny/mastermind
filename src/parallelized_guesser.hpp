@@ -41,7 +41,7 @@ auto parallelized_guesser<E>::make_guess() const -> int {
     std::cout 
         << "Choosing among " 
         << console::green_fg 
-        << possible_secrets_.size() 
+        << search_space_.size() 
         << console::reset 
         << " possible guesses" 
         << std::endl;
@@ -51,11 +51,11 @@ auto parallelized_guesser<E>::make_guess() const -> int {
         return random_int(0, match_table::MAX_GUESS - 1);
     }
 
-    if (possible_secrets_.size() == 1) {
-        return possible_secrets_[0];
+    if (search_space_.size() == 1) {
+        return search_space_[0];
     }
 
-    if (possible_secrets_.size() < threads_ || threads_ == 1) {
+    if (search_space_.size() < threads_ || threads_ == 1) {
         return find_best_guess(0).guess;
     }
 
@@ -84,9 +84,9 @@ template<typename E>
 auto parallelized_guesser<E>::find_best_guess(int offset) const -> best_guess {
     int min_metric = std::numeric_limits<int>::max();
     std::vector<int> min_guesses;
-    for (int index = offset; index < possible_secrets_.size(); index += threads_) {
-        int guess = possible_secrets_[index];
-        int metric = evaluate_guess_(guess, possible_secrets_);
+    for (int index = offset; index < search_space_.size(); index += threads_) {
+        int guess = search_space_[index];
+        int metric = evaluate_guess_(guess, search_space_);
         if (metric < min_metric) {
             min_metric = metric;
             min_guesses.clear();
