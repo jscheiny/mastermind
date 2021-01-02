@@ -22,7 +22,6 @@ auto smart_guesser::make_guess() const -> int {
     }
 
     static int threads = std::thread::hardware_concurrency();
-    std::cout << threads << std::endl;
 
     if (possible_secrets_.size() < threads) {
         return find_best_guess(1, 0).guess;
