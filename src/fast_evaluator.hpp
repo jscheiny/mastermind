@@ -1,5 +1,5 @@
-#ifndef FASTER_GUESSER_HPP
-#define FASTER_GUESSER_HPP
+#ifndef FASTER_EVALUATOR_HPP
+#define FASTER_EVALUATOR_HPP
 
 #include "secret_space.hpp"
 
