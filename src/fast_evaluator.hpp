@@ -1,10 +1,10 @@
 #ifndef FASTER_EVALUATOR_HPP
 #define FASTER_EVALUATOR_HPP
 
-#include "secret_space.hpp"
+#include <vector>
 
 struct fast_evaluator {
-    auto operator()(int guess, const secret_space& possible_secrets) const -> int;
+    auto operator()(int guess, const std::vector<int>& possible_secrets) const -> int;
 };
 
 #endif

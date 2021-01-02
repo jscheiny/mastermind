@@ -3,7 +3,7 @@
 #include <map>
 #include <algorithm>
 
-auto fast_evaluator::operator()(int guess, const secret_space& possible_secrets) const -> int {
+auto fast_evaluator::operator()(int guess, const std::vector<int>& possible_secrets) const -> int {
     const auto& table = match_table::instance();
     std::map<match_value, int> partitions;
     for (int secret : possible_secrets) {

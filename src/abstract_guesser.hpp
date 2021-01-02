@@ -2,7 +2,6 @@
 #define ABSTRACT_GUESSER_HPP
 
 #include "match_value.hpp"
-#include "secret_space.hpp"
 #include <vector>
 
 class abstract_guesser {
@@ -16,7 +15,7 @@ public:
     
 protected:
     std::vector<int> guess_history_;
-    secret_space possible_secrets_;
+    std::vector<int> possible_secrets_;
 
 };
 
