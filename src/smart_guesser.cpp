@@ -11,17 +11,6 @@
 std::random_device random_device;
 std::mt19937 random_generator(random_device());
 
-auto smart_guesser::reset() -> void {
-    guess_history_.clear();
-    possible_secrets_ = secret_space{};
-}
-
-auto smart_guesser::update(int guess, match_value match) -> void {
-    guess_history_.push_back(guess);
-    possible_secrets_ = possible_secrets_.get_narrowed_space(guess, match);
-}
-
-
 auto smart_guesser::make_guess() const -> int {
     if (guess_history_.empty()) {
         std::uniform_int_distribution<> distribution(0, match_table::MAX_GUESS);
@@ -33,6 +22,7 @@ auto smart_guesser::make_guess() const -> int {
     }
 
     static int threads = std::thread::hardware_concurrency();
+    std::cout << threads << std::endl;
 
     if (possible_secrets_.size() < threads) {
         return find_best_guess(1, 0).guess;

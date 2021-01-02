@@ -9,7 +9,7 @@ class secret_space {
 public:
     secret_space();
 
-    auto get_narrowed_space(int guess, const match_value& match) const -> secret_space;
+    auto narrow(int guess, const match_value& match) -> void;
     auto get_narrowed_size(int guess, const match_value& match) const -> int;
 
     auto size() const -> int {
@@ -30,8 +30,6 @@ public:
 
 private:
     std::vector<int> possible_secrets_;
-
-    secret_space(std::vector<int>&& possible_secrets): possible_secrets_{possible_secrets} {}
 };
 
 #endif

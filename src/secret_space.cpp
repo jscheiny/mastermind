@@ -12,14 +12,14 @@ secret_space::secret_space(): possible_secrets_(match_table::MAX_GUESS, 0) {
     std::iota(possible_secrets_.begin(), possible_secrets_.end(), 0);
 }
 
-auto secret_space::get_narrowed_space(int guess, const match_value& match) const -> secret_space {
-    std::vector<int> result_space;
+auto secret_space::narrow(int guess, const match_value& match) -> void {
+    std::vector<int> result;
     for (int secret : possible_secrets_) {
         if (check_secret(secret, guess, match)) {
-            result_space.push_back(secret);
+            result.push_back(secret);
         }
     }
-    return {std::move(result_space)};
+    possible_secrets_ = std::move(result);
 }
 
 auto secret_space::get_narrowed_size(int guess, const match_value& match) const -> int {
