@@ -26,6 +26,14 @@ public:
         return blacks_ == 4;
     }
 
+    auto blacks() const -> int {
+        return blacks_;
+    }
+
+    auto whites() const -> int {
+        return whites_;
+    }
+
     friend auto operator<< (std::ostream& os, const match_value& match) -> std::ostream&;
 
 private:
