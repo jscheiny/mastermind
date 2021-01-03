@@ -21,7 +21,10 @@ public:
 
     virtual ~parallelized_guesser() {}
 
-    virtual auto make_guess() const -> int override;
+    virtual auto operator()(
+        const std::vector<int>& guess_history,
+        const std::vector<int>& search_space
+    ) const -> int override;
 
 private:
     E evaluate_guess_;
@@ -32,31 +35,31 @@ private:
         int metric;
     };
 
-    auto find_best_guess(int offset) const -> best_guess;
+    auto find_best_guess(const std::vector<int>& search_space, int offset) const -> best_guess;
 };
 
 template <typename E>
-auto parallelized_guesser<E>::make_guess() const -> int {
+auto parallelized_guesser<E>::operator()(const std::vector<int>& guess_history, const std::vector<int>& search_space) const -> int {
     scoped_timer move_timer{"Make guess"};
     std::cout 
         << "Choosing among " 
         << console::green_fg 
-        << search_space_.size() 
+        << search_space.size() 
         << console::reset 
         << " possible guesses" 
         << std::endl;
 
 
-    if (guess_history_.empty()) {
+    if (guess_history.empty()) {
         return random_int(0, match_table::MAX_GUESS - 1);
     }
 
-    if (search_space_.size() == 1) {
-        return search_space_[0];
+    if (search_space.size() == 1) {
+        return search_space[0];
     }
 
-    if (search_space_.size() < threads_ || threads_ == 1) {
-        return find_best_guess(0).guess;
+    if (search_space.size() < threads_ || threads_ == 1) {
+        return find_best_guess(search_space, 0).guess;
     }
 
     std::vector<std::future<best_guess>> futures;
@@ -65,7 +68,7 @@ auto parallelized_guesser<E>::make_guess() const -> int {
         futures.push_back(
             std::async(
                 std::launch::async, 
-                std::bind(&parallelized_guesser::find_best_guess, this, offset)
+                [this, offset, &search_space]() { return find_best_guess(search_space, offset); }
             )
         );
     }
@@ -81,12 +84,12 @@ auto parallelized_guesser<E>::make_guess() const -> int {
 }
 
 template<typename E>
-auto parallelized_guesser<E>::find_best_guess(int offset) const -> best_guess {
+auto parallelized_guesser<E>::find_best_guess(const std::vector<int>& search_space, int offset) const -> best_guess {
     int min_metric = std::numeric_limits<int>::max();
     std::vector<int> min_guesses;
-    for (int index = offset; index < search_space_.size(); index += threads_) {
-        int guess = search_space_[index];
-        int metric = evaluate_guess_(guess, search_space_);
+    for (int index = offset; index < search_space.size(); index += threads_) {
+        int guess = search_space[index];
+        int metric = evaluate_guess_(guess, search_space);
         if (metric < min_metric) {
             min_metric = metric;
             min_guesses.clear();

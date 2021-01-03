@@ -8,15 +8,8 @@ class abstract_guesser {
 public:
     virtual ~abstract_guesser() {}
 
-    virtual auto make_guess() const -> int = 0;
-
-    auto reset() -> void;
-    auto update(int guess, match_value match) -> void;
-    
-protected:
-    std::vector<int> guess_history_;
-    std::vector<int> search_space_;
-
+    virtual auto operator()(const std::vector<int>& guess_history, const std::vector<int>& search_space) const
+        -> int = 0;
 };
 
 #endif
