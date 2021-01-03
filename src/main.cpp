@@ -52,6 +52,6 @@ auto main(int argc, char* argv[]) -> int {
 
     match_table::initialize();
 
-    simulate_games("average narrowing", games, average_narrowing);
-    simulate_games("max partition size", games, max_partition_size);
+    simulate_games("average block size", games, average_block_size);
+    simulate_games("max block size", games, max_block_size);
 }

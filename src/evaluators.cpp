@@ -3,33 +3,33 @@
 #include <algorithm>
 #include <map>
 
-auto partition_search_space(int guess, const std::vector<int>& search_space) -> std::map<match_value, int>;
+auto get_block_sizes(int guess, const std::vector<int>& search_space) -> std::map<match_value, int>;
 
-auto average_narrowing(int guess, const std::vector<int>& search_space) -> int {
-    auto partitions = partition_search_space(guess, search_space);
+auto average_block_size(int guess, const std::vector<int>& search_space) -> int {
+    auto block_sizes = get_block_sizes(guess, search_space);
     int metric = 0;
-    for (const auto& entry : partitions) {
+    for (const auto& entry : block_sizes) {
         metric += entry.second * entry.second;
     }
 
     return metric;
 }
 
-auto max_partition_size(int guess, const std::vector<int>& search_space) -> int {
-    auto partitions = partition_search_space(guess, search_space);
-    int max_partition_size = -1;
-    for (const auto& entry : partitions) {
-        max_partition_size = std::max(entry.second, max_partition_size);
+auto max_block_size(int guess, const std::vector<int>& search_space) -> int {
+    auto block_sizes = get_block_sizes(guess, search_space);
+    int max_block_size = -1;
+    for (const auto& entry : block_sizes) {
+        max_block_size = std::max(entry.second, max_block_size);
     }
 
-    return max_partition_size;
+    return max_block_size;
 }
 
-auto partition_search_space(int guess, const std::vector<int>& search_space) -> std::map<match_value, int> {
-    std::map<match_value, int> partitions;
+auto get_block_sizes(int guess, const std::vector<int>& search_space) -> std::map<match_value, int> {
+    std::map<match_value, int> block_sizes;
     for (int secret : search_space) {
         match_value match = match_table::get(guess, secret);
-        partitions[match]++;
+        block_sizes[match]++;
     }
-    return partitions;
+    return block_sizes;
 }

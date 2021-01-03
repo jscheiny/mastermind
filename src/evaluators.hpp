@@ -5,8 +5,8 @@
 #include <iostream>
 #include <vector>
 
-auto average_narrowing(int guess, const std::vector<int>& search_space) -> int;
-auto max_partition_size(int guess, const std::vector<int>& search_space) -> int;
+auto average_block_size(int guess, const std::vector<int>& search_space) -> int;
+auto max_block_size(int guess, const std::vector<int>& search_space) -> int;
 
 template<typename A, typename B>
 auto compare_evaluators(A evaluator_a, B evaluator_b) {
