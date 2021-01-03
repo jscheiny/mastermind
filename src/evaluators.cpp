@@ -8,10 +8,10 @@ auto partition_search_space(int guess, const std::vector<int>& search_space) -> 
 auto average_narrowing(int guess, const std::vector<int>& search_space) -> int {
     auto partitions = partition_search_space(guess, search_space);
     int metric = 0;
-    for (int secret : search_space) {
-        match_value match = match_table::get(guess, secret);
-        metric += partitions[match];
+    for (const auto& entry : partitions) {
+        metric += entry.second * entry.second;
     }
+
     return metric;
 }
 
