@@ -3,7 +3,6 @@
 #include "match_table.hpp"
 #include "max_partition_size.hpp"
 #include "parallelized_guesser.hpp"
-#include "scoped_timer.hpp"
 #include "secrets.hpp"
 #include <chrono>
 #include <cmath>
@@ -16,18 +15,15 @@ auto main(int argc, char* argv[]) -> int {
 
     match_table::instance();
     std::cout << std::endl;
+
     parallelized_guesser<max_partition_size> guesser{max_partition_size{}};
 
     std::vector<int> move_counts;
-    {
-        scoped_timer timer{"All games"};
-        for (int i = 0; i < games; i++) {
-            int moves = play_mastermind(guesser, random_secret());
-            move_counts.push_back(moves);
-            std::cout << "\nGame finished in " << console::red_fg << moves << console::reset << " moves\n" << std::endl;
-        }
-    }
-        
+    for (int i = 0; i < games; i++) {
+        int moves = play_mastermind(guesser, random_secret());
+        move_counts.push_back(moves);
+        std::cout << "\nGame finished in " << console::red_fg << moves << console::reset << " moves\n" << std::endl;
+    }   
 
     int sum = std::accumulate(move_counts.begin(), move_counts.end(), 0);
     double n = (double) games;
