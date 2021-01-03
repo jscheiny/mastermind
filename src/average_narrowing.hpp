@@ -1,9 +1,9 @@
-#ifndef SMART_EVALUATOR_HPP
-#define SMART_EVALUATOR_HPP
+#ifndef AVERAGE_NARROWING_HPP
+#define AVERAGE_NARROWING_HPP
 
 #include <vector>
 
-struct smart_evaluator {
+struct average_narrowing {
     auto operator()(int guess, const std::vector<int>& search_space) const -> int;
 };
 

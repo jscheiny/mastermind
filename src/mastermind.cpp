@@ -1,22 +1,22 @@
 #include "console.hpp"
 #include "game.hpp"
 #include "match_table.hpp"
+#include "max_partition_size.hpp"
+#include "parallelized_guesser.hpp"
 #include "random_secret.hpp"
 #include "scoped_timer.hpp"
-#include "fast_evaluator.hpp"
-#include "parallelized_guesser.hpp"
 #include <chrono>
 #include <cmath>
-#include <stdlib.h>
 #include <iostream>
 #include <numeric>
+#include <stdlib.h>
 
 auto main(int argc, char* argv[]) -> int {
     int games = atoi(argv[1]);
 
     match_table::instance();
     std::cout << std::endl;
-    auto guesser = std::make_shared<parallelized_guesser<fast_evaluator>>(fast_evaluator{});
+    auto guesser = std::make_shared<parallelized_guesser<max_partition_size>>(max_partition_size{});
     auto secret = std::make_shared<random_secret>();
     game mastermind{guesser, secret};
 

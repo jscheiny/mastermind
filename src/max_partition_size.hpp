@@ -3,7 +3,7 @@
 
 #include <vector>
 
-struct fast_evaluator {
+struct max_partition_size {
     auto operator()(int guess, const std::vector<int>& search_space) const -> int;
 };
 

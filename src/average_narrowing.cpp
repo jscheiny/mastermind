@@ -1,9 +1,9 @@
+#include "average_narrowing.hpp"
 #include "match_table.hpp"
-#include "smart_evaluator.hpp"
 
 auto get_narrowed_size(const std::vector<int>& search_space, int guess, const match_value& match) -> int;
 
-auto smart_evaluator::operator()(int guess, const std::vector<int>& search_space) const -> int {
+auto average_narrowing::operator()(int guess, const std::vector<int>& search_space) const -> int {
     const auto& table = match_table::instance();
     int metric = 0;
     for (int secret : search_space) {
