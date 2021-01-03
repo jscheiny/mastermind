@@ -50,7 +50,7 @@ auto main(int argc, char* argv[]) -> int {
 
     int games = atoi(argv[1]);
 
-    match_table::instance();
+    match_table::initialize();
 
     simulate_games("average narrowing", games, average_narrowing);
     simulate_games("max partition size", games, max_partition_size);

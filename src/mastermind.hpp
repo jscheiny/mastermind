@@ -55,10 +55,9 @@ auto mastermind<Guesser, Secret>::play() -> int {
 
 template<typename Guesser, typename Secret>
 auto mastermind<Guesser, Secret>::narrow_search_space(int guess, const match_value& match) -> void {
-    const auto& table = match_table::instance();
     std::vector<int> new_search_space;
     for (int secret : search_space_) {
-        if (table.get_match(guess, secret) == match && secret != guess) {
+        if (match_table::get(guess, secret) == match && secret != guess) {
             new_search_space.push_back(secret);
         }
     }

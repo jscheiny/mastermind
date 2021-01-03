@@ -6,7 +6,7 @@
 
 auto fixed_secret(int secret) {
     return [secret](int guess) -> match_value {
-        return match_table::instance().get_match(guess, secret);
+        return match_table::get(guess, secret);
     };
 }
 

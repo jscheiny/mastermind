@@ -8,11 +8,6 @@ auto digits(int guess) -> std::string;
 
 static const std::string TABLE_PATH = "match_table.txt";
 
-auto match_table::instance() -> const match_table& {
-    static match_table table;
-    return table;
-}
-
 match_table::match_table(): table_ {MAX_GUESS * MAX_GUESS} {
     auto can_read_table = read();
     if (!can_read_table) {

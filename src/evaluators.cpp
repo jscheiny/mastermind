@@ -6,11 +6,10 @@
 auto partition_search_space(int guess, const std::vector<int>& search_space) -> std::map<match_value, int>;
 
 auto average_narrowing(int guess, const std::vector<int>& search_space) -> int {
-    const auto& table = match_table::instance();
     auto partitions = partition_search_space(guess, search_space);
     int metric = 0;
     for (int secret : search_space) {
-        match_value match = table.get_match(guess, secret);
+        match_value match = match_table::get(guess, secret);
         metric += partitions[match];
     }
     return metric;
@@ -27,10 +26,9 @@ auto max_partition_size(int guess, const std::vector<int>& search_space) -> int 
 }
 
 auto partition_search_space(int guess, const std::vector<int>& search_space) -> std::map<match_value, int> {
-    const auto& table = match_table::instance();
     std::map<match_value, int> partitions;
     for (int secret : search_space) {
-        match_value match = table.get_match(guess, secret);
+        match_value match = match_table::get(guess, secret);
         partitions[match]++;
     }
     return partitions;
