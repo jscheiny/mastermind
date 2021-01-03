@@ -1,6 +1,7 @@
 #include "match_table.hpp"
 #include "match_value.hpp"
 #include "scoped_timer.hpp"
+#include <algorithm>
 #include <fstream>
 
 auto compute_match(int guess, int secret) -> match_value;
