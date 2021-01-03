@@ -11,7 +11,7 @@ auto fixed_secret(int secret) {
 }
 
 auto random_secret() {
-    return fixed_secret(random::range(0, match_table::MAX_GUESS - 1));
+    return fixed_secret(random::index(match_table::MAX_GUESS));
 }
 
 #endif

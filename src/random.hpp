@@ -7,6 +7,7 @@
 class random {
 public:
     static auto range(int lower, int upper) -> int;
+    static auto index(int size) -> int;
 
     template<typename T>
     static auto shuffle(T begin, T end) -> void;

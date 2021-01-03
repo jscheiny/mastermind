@@ -47,7 +47,7 @@ auto parallelized_guesser<E>::operator()(
         << std::endl;
 
     if (guess_history.empty()) {
-        return random::range(0, match_table::MAX_GUESS - 1);
+        return random::index(match_table::MAX_GUESS);
     }
 
     if (search_space.size() == 1) {
@@ -95,7 +95,7 @@ auto parallelized_guesser<E>::find_best_guess(const std::vector<int>& search_spa
         }
     }
 
-    int random_index = random::range(0, min_guesses.size() - 1);
+    int random_index = random::index(min_guesses.size());
     return {.guess = min_guesses[random_index], .metric = min_metric};
 }
 
