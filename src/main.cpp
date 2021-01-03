@@ -5,6 +5,7 @@
 #include "parallelized_guesser.hpp"
 #include "scoped_timer.hpp"
 #include "secrets.hpp"
+#include "max_partition_size.hpp"
 #include <chrono>
 #include <cmath>
 #include <iostream>
@@ -12,26 +13,19 @@
 #include <sstream>
 #include <stdlib.h>
 
-auto main(int argc, char* argv[]) -> int {
-    if (argc < 1) {
-        std::cout << "Error: Provide a number of games to play" << std::endl;
-        return 1;
-    }
-
-    int games = atoi(argv[1]);
-
-    match_table::instance();
-
-    auto guesser = make_parallelized_guesser(average_narrowing{});
+template<typename E>
+auto simulate_games(const std::string& name, int games) -> void {
+    auto guesser = make_parallelized_guesser(E{});
     std::vector<int> move_counts;
     {
         std::stringstream timer_name;
-        timer_name << games << " games";
+        timer_name << games << " " << name << " games";
         scoped_timer timer{timer_name.str()};
         for (int i = 0; i < games; i++) {
             int moves = play_mastermind(guesser, random_secret());
             move_counts.push_back(moves);
-        }   
+        }
+        std::cout << std::endl;   
     }
 
     int sum = std::accumulate(move_counts.begin(), move_counts.end(), 0);
@@ -45,6 +39,19 @@ auto main(int argc, char* argv[]) -> int {
     double variance = total_deviation / n;
     double stddev = sqrt(variance);
 
-    std::cout << "\nAverage moves = " << console::green_fg << mean << console::reset << std::endl;
+    std::cout << "Average moves = " << console::green_fg << mean << console::reset << std::endl;
     std::cout << "Standard deviation = " << console::green_fg << stddev << console::reset << std::endl;
+}
+
+auto main(int argc, char* argv[]) -> int {
+    if (argc < 1) {
+        std::cout << "Error: Provide a number of games to play" << std::endl;
+        return 1;
+    }
+
+    int games = atoi(argv[1]);
+
+    match_table::instance();
+
+    simulate_games<average_narrowing>("average narrowing", games);
 }
