@@ -1,6 +1,7 @@
 #ifndef RANDOM_HPP
 #define RANDOM_HPP
 
+#include <algorithm>
 #include <chrono>
 #include <random>
 
