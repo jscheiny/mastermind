@@ -1,7 +1,6 @@
 #ifndef PARALLELIZED_GUESSER_HPP
 #define PARALLELIZED_GUESSER_HPP
 
-#include "abstract_guesser.hpp"
 #include "console.hpp"
 #include "match_table.hpp"
 #include "parallelized_guesser.hpp"
@@ -12,19 +11,14 @@
 #include <future>
 
 template <typename E>
-class parallelized_guesser : public abstract_guesser {
+class parallelized_guesser{
 public:
     parallelized_guesser(
         E evaluate_guess,
         int threads = std::thread::hardware_concurrency()
     ): evaluate_guess_{evaluate_guess}, threads_{threads} {}
 
-    virtual ~parallelized_guesser() {}
-
-    virtual auto operator()(
-        const std::vector<int>& guess_history,
-        const std::vector<int>& search_space
-    ) const -> int override;
+    auto operator()(const std::vector<int>& guess_history, const std::vector<int>& search_space) const -> int;
 
 private:
     E evaluate_guess_;
@@ -39,7 +33,10 @@ private:
 };
 
 template <typename E>
-auto parallelized_guesser<E>::operator()(const std::vector<int>& guess_history, const std::vector<int>& search_space) const -> int {
+auto parallelized_guesser<E>::operator()(
+    const std::vector<int>& guess_history,
+    const std::vector<int>& search_space
+) const -> int {
     scoped_timer move_timer{"Make guess"};
     std::cout 
         << "Choosing among " 
@@ -49,9 +46,8 @@ auto parallelized_guesser<E>::operator()(const std::vector<int>& guess_history, 
         << " possible guesses" 
         << std::endl;
 
-
     if (guess_history.empty()) {
-        return random_int(0, match_table::MAX_GUESS - 1);
+        return random::range(0, match_table::MAX_GUESS - 1);
     }
 
     if (search_space.size() == 1) {
@@ -78,7 +74,7 @@ auto parallelized_guesser<E>::operator()(const std::vector<int>& guess_history, 
         results.push_back(future.get());
     }
 
-    std::random_shuffle(results.begin(), results.end());
+    random::shuffle(results.begin(), results.end());
     auto min = std::min_element(results.begin(), results.end(), [](best_guess a, best_guess b) { return a.metric < b.metric; });
     return min->guess;
 }
@@ -99,7 +95,7 @@ auto parallelized_guesser<E>::find_best_guess(const std::vector<int>& search_spa
         }
     }
 
-    int random_index = random_int(0, min_guesses.size() - 1);
+    int random_index = random::range(0, min_guesses.size() - 1);
     return {.guess = min_guesses[random_index], .metric = min_metric};
 }
 
