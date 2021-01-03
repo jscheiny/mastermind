@@ -3,8 +3,6 @@
 
 #include <vector>
 
-struct average_narrowing {
-    auto operator()(int guess, const std::vector<int>& search_space) const -> int;
-};
+auto average_narrowing(int guess, const std::vector<int>& search_space) -> int;
 
 #endif

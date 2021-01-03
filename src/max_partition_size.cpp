@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <map>
 
-auto max_partition_size::operator()(int guess, const std::vector<int>& search_space) const -> int {
+auto max_partition_size(int guess, const std::vector<int>& search_space) -> int {
     const auto& table = match_table::instance();
     std::map<match_value, int> partitions;
     for (int secret : search_space) {

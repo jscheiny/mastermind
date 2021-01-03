@@ -3,8 +3,6 @@
 
 #include <vector>
 
-struct max_partition_size {
-    auto operator()(int guess, const std::vector<int>& search_space) const -> int;
-};
+auto max_partition_size (int guess, const std::vector<int>& search_space) -> int;
 
 #endif

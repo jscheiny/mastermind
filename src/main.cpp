@@ -14,8 +14,8 @@
 #include <stdlib.h>
 
 template<typename E>
-auto simulate_games(const std::string& name, int games) -> void {
-    auto guesser = make_parallelized_guesser(E{});
+auto simulate_games(const std::string& name, int games, E evaluator) -> void {
+    auto guesser = make_parallelized_guesser(evaluator);
     std::vector<int> move_counts;
     {
         std::stringstream timer_name;
@@ -53,5 +53,6 @@ auto main(int argc, char* argv[]) -> int {
 
     match_table::instance();
 
-    simulate_games<average_narrowing>("average narrowing", games);
+    simulate_games("average narrowing", games, average_narrowing);
+    simulate_games("max partition size", games, max_partition_size);
 }

@@ -2,7 +2,7 @@
 #include "match_table.hpp"
 #include <map>
 
-auto average_narrowing::operator()(int guess, const std::vector<int>& search_space) const -> int {
+auto average_narrowing(int guess, const std::vector<int>& search_space) -> int {
     const auto& table = match_table::instance();
     std::map<match_value, int> partitions;
     for (int secret : search_space) {
