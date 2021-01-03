@@ -22,7 +22,7 @@ auto main(int argc, char* argv[]) -> int {
     {
         scoped_timer timer{"All games"};
         for (int i = 0; i < games; i++) {
-            int moves = play_game(guesser, random_secret());
+            int moves = play_mastermind(guesser, random_secret());
             move_counts.push_back(moves);
             std::cout << "\nGame finished in " << console::red_fg << moves << console::reset << " moves\n" << std::endl;
         }
