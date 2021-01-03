@@ -1,11 +1,10 @@
-#include "average_narrowing.hpp"
 #include "console.hpp"
+#include "evaluators.hpp"
 #include "mastermind.hpp"
 #include "match_table.hpp"
 #include "parallelized_guesser.hpp"
 #include "scoped_timer.hpp"
 #include "secrets.hpp"
-#include "max_partition_size.hpp"
 #include <chrono>
 #include <cmath>
 #include <iostream>
