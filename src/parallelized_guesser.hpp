@@ -5,13 +5,12 @@
 #include "match_table.hpp"
 #include "parallelized_guesser.hpp"
 #include "random.hpp"
-#include "scoped_timer.hpp"
 #include <algorithm>
 #include <functional>
 #include <future>
 
-template <typename E>
-class parallelized_guesser{
+template<typename E>
+class parallelized_guesser {
 public:
     parallelized_guesser(
         E evaluate_guess,
@@ -32,20 +31,16 @@ private:
     auto find_best_guess(const std::vector<int>& search_space, int offset) const -> best_guess;
 };
 
-template <typename E>
+template<typename E>
+auto make_parallelized_guesser(E evaluator) -> parallelized_guesser<E> {
+    return {evaluator};
+}
+
+template<typename E>
 auto parallelized_guesser<E>::operator()(
     const std::vector<int>& guess_history,
     const std::vector<int>& search_space
 ) const -> int {
-    scoped_timer move_timer{"Make guess"};
-    std::cout 
-        << "Choosing among " 
-        << console::green_fg 
-        << search_space.size() 
-        << console::reset 
-        << " possible guesses" 
-        << std::endl;
-
     if (guess_history.empty()) {
         return random::index(match_table::MAX_GUESS);
     }

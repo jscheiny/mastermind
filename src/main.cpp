@@ -21,8 +21,8 @@ auto main(int argc, char* argv[]) -> int {
     int games = atoi(argv[1]);
 
     match_table::instance();
-    parallelized_guesser<average_narrowing> guesser{average_narrowing{}};
 
+    auto guesser = make_parallelized_guesser(average_narrowing{});
     std::vector<int> move_counts;
     {
         std::stringstream timer_name;
