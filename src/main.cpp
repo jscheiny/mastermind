@@ -1,5 +1,5 @@
 #include "console.hpp"
-#include "game.hpp"
+#include "mastermind.hpp"
 #include "match_table.hpp"
 #include "max_partition_size.hpp"
 #include "parallelized_guesser.hpp"

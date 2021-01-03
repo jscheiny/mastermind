@@ -1,5 +1,5 @@
-#ifndef GAME_HPP
-#define GAME_HPP
+#ifndef MASTERMIND_HPP
+#define MASTERMIND_HPP
 
 #include "match_table.hpp"
 #include "scoped_timer.hpp"
@@ -9,12 +9,12 @@
 #include <numeric>
 
 template<typename Guesser, typename Secret>
-auto play_game(Guesser guesser, Secret secret) -> int;
+auto play_mastermind(Guesser guesser, Secret secret) -> int;
 
 template<typename Guesser, typename Secret>
-class game {
+class mastermind {
 public:
-    game(Guesser guesser, Secret secret);
+    mastermind(Guesser guesser, Secret secret);
 
     auto play() -> int;
 private:
@@ -28,18 +28,18 @@ private:
 
 
 template<typename Guesser, typename Secret>
-auto play_game(Guesser guesser, Secret secret) -> int {
-    return game<Guesser, Secret>{guesser, secret}.play();
+auto play_mastermind(Guesser guesser, Secret secret) -> int {
+    return mastermind<Guesser, Secret>{guesser, secret}.play();
 }
 
 template<typename Guesser, typename Secret>
-game<Guesser, Secret>::game(Guesser guesser, Secret secret): guesser_{guesser}, secret_{secret} {
+mastermind<Guesser, Secret>::mastermind(Guesser guesser, Secret secret): guesser_{guesser}, secret_{secret} {
     search_space_ = std::vector<int>(match_table::MAX_GUESS, 0);
     std::iota(search_space_.begin(), search_space_.end(), 0);
 }
 
 template<typename Guesser, typename Secret>
-auto game<Guesser, Secret>::play() -> int {
+auto mastermind<Guesser, Secret>::play() -> int {
     int moves = 0;
     scoped_timer game_timer{"Game"};
     while (true) {
@@ -63,7 +63,7 @@ auto game<Guesser, Secret>::play() -> int {
 }
 
 template<typename Guesser, typename Secret>
-auto game<Guesser, Secret>::narrow_search_space(int guess, const match_value& match) -> void {
+auto mastermind<Guesser, Secret>::narrow_search_space(int guess, const match_value& match) -> void {
     const auto& table = match_table::instance();
     std::vector<int> new_search_space;
     for (int secret : search_space_) {
