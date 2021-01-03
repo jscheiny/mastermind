@@ -27,7 +27,6 @@ auto match_table::read() -> bool {
         return false;
     }
     
-    std::cout << "Reading match table... " << std::flush;
     scoped_timer read_timer{"Read match table"};
     int blacks, whites;
     int index = 0;
@@ -35,7 +34,6 @@ auto match_table::read() -> bool {
         table_[index] = { blacks, whites };
         index++;
     }
-    std::cout << "Done." << std::endl;
     return true;
 }
 

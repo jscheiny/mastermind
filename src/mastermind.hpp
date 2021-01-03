@@ -2,7 +2,6 @@
 #define MASTERMIND_HPP
 
 #include "match_table.hpp"
-#include "scoped_timer.hpp"
 #include <chrono>
 #include <memory>
 #include <vector>
@@ -41,7 +40,6 @@ mastermind<Guesser, Secret>::mastermind(Guesser guesser, Secret secret): guesser
 template<typename Guesser, typename Secret>
 auto mastermind<Guesser, Secret>::play() -> int {
     int moves = 0;
-    scoped_timer game_timer{"Game"};
     while (true) {
         int guess = guesser_(guess_history_, search_space_);
         guess_history_.push_back(guess);
@@ -52,13 +50,6 @@ auto mastermind<Guesser, Secret>::play() -> int {
         }
         narrow_search_space(guess, match);
     }
-    
-    std::cout << "Guesses";
-    for (int guess : guess_history_) {
-        std::cout << " -> " << console::purple_fg << guess << console::reset;
-    }
-    std::cout << std::endl;
-
     return moves;
 }
 
