@@ -2,8 +2,8 @@
 #include "evaluators.hpp"
 #include "mastermind.hpp"
 #include "match_table.hpp"
-#include "parallelized_guesser.hpp"
 #include "scoped_timer.hpp"
+#include "scored_guesser.hpp"
 #include "secrets.hpp"
 #include <chrono>
 #include <cmath>
@@ -36,7 +36,7 @@ auto simulate_games(int games, const S& score_fn, int threads) -> void {
     for (int i = 0; i < threads; i++) {
         futures.push_back(
             std::async(std::launch::async, [&score_fn, games_per_thread, threads]() {
-                auto guesser = make_guesser(score_fn);
+                auto guesser = make_scored_guesser(score_fn);
                 int total_moves = 0;
                 for (int i = 0; i < games_per_thread; i++) {
                     total_moves += play_mastermind(guesser, random_secret());

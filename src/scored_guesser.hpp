@@ -3,14 +3,13 @@
 
 #include "console.hpp"
 #include "match_table.hpp"
-#include "parallelized_guesser.hpp"
 #include "random.hpp"
 #include <algorithm>
 #include <functional>
 #include <future>
 
 template<typename S>
-auto make_guesser(
+auto make_scored_guesser(
     const S& score_fn,
     int threads = std::thread::hardware_concurrency()
 ) {
