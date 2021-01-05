@@ -5,12 +5,8 @@
 #include "score_functions.hpp"
 #include "scored_guesser.hpp"
 #include "secrets.hpp"
-#include <chrono>
-#include <cmath>
 #include <iostream>
-#include <numeric>
-#include <sstream>
-#include <stdlib.h>
+#include <future>
 
 template<typename S>
 auto simulate_games(int games, const S& score_fn, int threads = std::thread::hardware_concurrency()) -> void;

@@ -5,15 +5,10 @@
 #include "match_table.hpp"
 #include "random.hpp"
 #include <algorithm>
-#include <functional>
-#include <future>
 
 template<typename S>
-auto make_scored_guesser(
-    const S& score_fn,
-    int threads = std::thread::hardware_concurrency()
-) {
-    return [&score_fn, threads](const std::vector<int>& guess_history, const std::vector<int>& search_space) -> int {
+auto make_scored_guesser(const S& score_fn) {
+    return [&score_fn](const std::vector<int>& guess_history, const std::vector<int>& search_space) -> int {
         if (guess_history.empty()) {
             return random::index(match_table::MAX_GUESS);
         }
