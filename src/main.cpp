@@ -1,8 +1,8 @@
 #include "console.hpp"
-#include "evaluators.hpp"
 #include "mastermind.hpp"
 #include "match_table.hpp"
 #include "scoped_timer.hpp"
+#include "score_functions.hpp"
 #include "scored_guesser.hpp"
 #include "secrets.hpp"
 #include <chrono>

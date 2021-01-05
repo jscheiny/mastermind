@@ -1,5 +1,5 @@
-#include "evaluators.hpp"
 #include "match_table.hpp"
+#include "score_functions.hpp"
 #include <algorithm>
 #include <map>
 #include <sstream>
