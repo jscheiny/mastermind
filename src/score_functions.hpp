@@ -16,7 +16,7 @@ auto compare_score_functions(A score_fn_a, B score_fn_b) {
         if (score_a != score_b) {
             std::cout << "Scores are not the same "<< std::endl;
         }
-        return result_a;
+        return score_a;
     };
 }
 
