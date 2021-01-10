@@ -9,7 +9,12 @@ auto digits(int guess) -> std::string;
 
 static const std::string TABLE_PATH = "match_table.txt";
 
-match_table::match_table(): table_ {MAX_GUESS * MAX_GUESS} {
+match_table::match_table(bool in_memory): table_ {MAX_GUESS * MAX_GUESS} {
+    if (in_memory) {
+        populate();
+        return;
+    }
+
     auto can_read_table = read();
     if (!can_read_table) {
         populate();
@@ -34,6 +39,7 @@ auto match_table::read() -> bool {
 }
 
 auto match_table::populate() -> void {
+    scoped_timer timer{"Populate match table"};
     for (int guess = 0; guess < match_table::MAX_GUESS; guess++) {
         for (int secret = 0; secret <= guess; secret++) {
             auto match = compute_match(guess, secret);

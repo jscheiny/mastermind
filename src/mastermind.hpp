@@ -2,6 +2,7 @@
 #define MASTERMIND_HPP
 
 #include "match_table.hpp"
+#include "utils.hpp"
 #include <chrono>
 #include <memory>
 #include <vector>
@@ -33,8 +34,7 @@ auto play_mastermind(Guesser guesser, Secret secret) -> int {
 
 template<typename Guesser, typename Secret>
 mastermind<Guesser, Secret>::mastermind(Guesser guesser, Secret secret): guesser_{guesser}, secret_{secret} {
-    search_space_ = std::vector<int>(match_table::MAX_GUESS, 0);
-    std::iota(search_space_.begin(), search_space_.end(), 0);
+    search_space_ = make_initial_search_space();
 }
 
 template<typename Guesser, typename Secret>

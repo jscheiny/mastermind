@@ -1,7 +1,6 @@
 #ifndef SCORE_FUNCTIONS_HPP
 #define SCORE_FUNCTIONS_HPP
 
-#include "console.hpp"
 #include <iostream>
 #include <vector>
 
