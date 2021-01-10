@@ -1,7 +1,6 @@
 #include "console.hpp"
 #include "mastermind.hpp"
 #include "match_table.hpp"
-#include "scoped_timer.hpp"
 #include "score_functions.hpp"
 #include "scored_guesser.hpp"
 #include "secrets.hpp"
@@ -26,7 +25,6 @@ auto main(int argc, char* argv[]) -> int {
 
 template<typename S>
 auto simulate_games(int games, const S& score_fn, int threads) -> void {
-    scoped_timer timer{"Games"};
     std::vector<std::future<int>> futures;
     int games_per_thread = games / threads;
     int mod = games % threads;
